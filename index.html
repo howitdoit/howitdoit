@@ -4,35 +4,148 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>This is howITdoit</title>
+
   <style>
     body {
+      font-family: system-ui, Arial, sans-serif;
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0a0a0a;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      padding: 0;
+      background: #f9fafb;
+      color: #111827;
+    }
+
+    header {
+      background: #111827;
+      color: #f9fafb;
       text-align: center;
+      padding: 2rem 1rem;
     }
-    h1 { font-size: 3em; margin-bottom: 0.3em; }
-    p { color: #ccc; margin-bottom: 1em; }
-    a {
-      background: #00bcd4;
-      color: black;
-      padding: 10px 20px;
-      border-radius: 8px;
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    #rss-feed article {
+      background: white;
+      border-radius: 1rem;
+      padding: 1rem 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    #rss-feed article:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    #rss-feed h3 {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    #rss-feed a {
       text-decoration: none;
-      font-weight: bold;
+      color: #2563eb;
     }
-    a:hover { background: #0097a7; }
+
+    #rss-feed p {
+      margin: 0.5rem 0;
+      color: #374151;
+    }
+
+    #rss-feed small {
+      color: #6b7280;
+    }
+
+    .more-posts {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      background: #2563eb;
+      color: white;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      transition: background 0.2s ease;
+    }
+
+    .more-posts:hover {
+      background: #1d4ed8;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: #6b7280;
+      border-top: 1px solid #e5e7eb;
+      margin-top: 3rem;
+    }
   </style>
 </head>
+
 <body>
-  <h1>Welcome to howITdoit.com</h1>
-  <p>Explore my projects, blogs, and stories about howITdoit.</p>
-  <a href="https://life.howitdoit.com">Visit My Blog</a>
+  <header>
+    <h1>This is howITdoit</h1>
+    <p>Tech tips, real stories, and how-to experiences that matter.</p>
+  </header>
+
+  <main>
+    <h2>🚀 Latest Blog Updates</h2>
+    <div id="rss-feed">Loading latest posts...</div>
+    <a class="more-posts" href="https://life.howitdoit.com" target="_blank">View More Posts</a>
+  </main>
+
+  <footer>
+    &copy; 2025 This is howITdoit — All Rights Reserved
+  </footer>
+
+  <script>
+    async function loadRSS() {
+      const rssUrl = 'https://life.howitdoit.com/feeds/posts/default?alt=rss';
+      const rss2json = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+
+      try {
+        const response = await fetch(rss2json);
+        const data = await response.json();
+
+        let html = '';
+        data.items.slice(0, 4).forEach(item => {
+          const date = new Date(item.pubDate).toLocaleDateString('en-US', {
+            year: 'numeric', month: 'short', day: 'numeric'
+          });
+
+          const imgMatch = item.description.match(/<img[^>]+src="([^">]+)"/);
+          const image = imgMatch ? imgMatch[1] : 'https://via.placeholder.com/800x400?text=This+is+howITdoit';
+
+          html += `
+            <article>
+              <img src="${image}" alt="${item.title}" style="width:100%; border-radius:0.75rem; margin-bottom:0.5rem;">
+              <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
+              <small>${date}</small>
+              <p>${item.description.replace(/<[^>]+>/g, '').substring(0, 120)}...</p>
+            </article>
+          `;
+        });
+
+        document.getElementById('rss-feed').innerHTML = html;
+      } catch (e) {
+        document.getElementById('rss-feed').innerHTML = '⚠️ Failed to load feed. Please try again later.';
+      }
+    }
+
+    loadRSS();
+  </script>
 </body>
 </html>
