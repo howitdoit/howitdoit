@@ -1,201 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>This is howITdoit</title>
-
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="2; url=https://www.howitdoit.com">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecting...</title>
   <style>
     body {
       font-family: system-ui, Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
       margin: 0;
-      padding: 0;
-      background: #f9fafb;
+      background-color: #f9fafb;
       color: #111827;
-    }
-
-    header {
-      background: #111827;
-      color: #f9fafb;
       text-align: center;
-      padding: 2rem 1rem;
     }
-
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
     }
-
-    main {
-      max-width: 1100px;
-      margin: 2rem auto;
-      padding: 0 1rem;
+    p {
+      color: #6b7280;
+      font-size: 1rem;
     }
-
-    h2 {
-      font-size: 1.5rem;
-      margin: 2rem 0 1rem;
-      border-left: 5px solid #2563eb;
-      padding-left: 0.5rem;
-    }
-
-    .feed-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
-
-    article {
-      background: white;
-      border-radius: 1rem;
-      overflow: hidden;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    article:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    article img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-    }
-
-    article .content {
-      padding: 1rem;
-    }
-
-    article h3 {
-      margin: 0;
-      font-size: 1.1rem;
-    }
-
-    article a {
-      text-decoration: none;
+    a {
       color: #2563eb;
+      text-decoration: none;
+      font-weight: 500;
     }
-
-    article p {
-      margin: 0.5rem 0;
-      color: #374151;
-    }
-
-    article small {
-      color: #6b7280;
-    }
-
-    footer {
-      text-align: center;
-      padding: 2rem 1rem;
-      color: #6b7280;
-      border-top: 1px solid #e5e7eb;
-      margin-top: 3rem;
+    a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
-
 <body>
-  <header>
-    <h1>This is howITdoit</h1>
-    <p>Life • Tech • Finance • Reviews • Food — real stories and experiences that work.</p>
-  </header>
-
-  <main>
-    <section id="life">
-      <h2>🌱 Life</h2>
-      <div class="feed-grid"></div>
-    </section>
-
-    <section id="it">
-      <h2>💻 IT</h2>
-      <div class="feed-grid"></div>
-    </section>
-
-    <section id="finance">
-      <h2>💰 Finance</h2>
-      <div class="feed-grid"></div>
-    </section>
-
-    <section id="reviews">
-      <h2>⭐ Reviews</h2>
-      <div class="feed-grid"></div>
-    </section>
-
-    <section id="food">
-      <h2>🍜 Food</h2>
-      <div class="feed-grid"></div>
-    </section>
-  </main>
-
-  <footer>
-    &copy; 2025 This is howITdoit — All Rights Reserved
-  </footer>
+  <h1>Redirecting to howITdoit...</h1>
+  <p>If you are not redirected automatically, <a href="https://www.howitdoit.com">click here</a>.</p>
 
   <script>
-  const blogs = {
-    life: 'https://life.howitdoit.com/feeds/posts/default?alt=rss',
-    it: 'https://tech.howitdoit.com/feeds/posts/default?alt=rss',
-    finance: 'https://finance.howitdoit.com/feeds/posts/default?alt=rss',
-    reviews: 'https://reviews.howitdoit.com/feeds/posts/default?alt=rss',
-    food: 'https://food.howitdoit.com/feeds/posts/default?alt=rss'
-  };
-
-  // 🧹 Clean RSS text — removes HTML tags and decodes HTML entities like &nbsp;
-  function cleanText(html) {
-    // Create a temporary element to decode HTML entities
-    const temp = document.createElement('textarea');
-    temp.innerHTML = html;
-    const decoded = temp.value;
-
-    // Remove any leftover tags and trim extra spaces
-    return decoded.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
-  }
-
-  async function loadFeed(sectionId, feedUrl) {
-    const rss2json = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`;
-    const container = document.querySelector(`#${sectionId} .feed-grid`);
-
-    try {
-      const response = await fetch(rss2json);
-      const data = await response.json();
-
-      let html = '';
-      data.items.slice(0, 2).forEach(item => {
-        const date = new Date(item.pubDate).toLocaleDateString('en-US', {
-          year: 'numeric', month: 'short', day: 'numeric'
-        });
-
-        const imgMatch = item.description.match(/<img[^>]+src="([^">]+)"/);
-        const image = imgMatch ? imgMatch[1] : 'https://via.placeholder.com/800x400?text=howITdoit';
-
-        // 🧽 Use cleanText() to remove &nbsp; and other entities
-        const description = cleanText(item.description).substring(0, 100);
-
-        html += `
-          <article>
-            <img src="${image}" alt="${item.title}">
-            <div class="content">
-              <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
-              <small>${date}</small>
-              <p>${description}...</p>
-            </div>
-          </article>
-        `;
-      });
-
-      container.innerHTML = html;
-    } catch (e) {
-      container.innerHTML = '<p>⚠️ Failed to load feed.</p>';
-    }
-  }
-
-  for (const [id, url] of Object.entries(blogs)) {
-    loadFeed(id, url);
-  }
-</script>
-
+    // JavaScript fallback in case meta refresh fails
+    setTimeout(() => {
+      window.location.href = "https://www.howitdoit.com";
+    }, 2000);
+  </script>
 </body>
 </html>
