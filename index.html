@@ -5,6 +5,11 @@
   <meta http-equiv="refresh" content="2; url=https://www.howitdoit.com">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Redirecting...</title>
+
+  <!-- Favicon / App Icon -->
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/howitdoit/howitdoit/Icons/howITdoit_512.png" type="image/png">
+  <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/howitdoit/howitdoit/Icons/howITdoit_512.png">
+
   <style>
     body {
       font-family: system-ui, Arial, sans-serif;
@@ -17,6 +22,11 @@
       background-color: #f9fafb;
       color: #111827;
       text-align: center;
+    }
+    img.logo {
+      width: 90px;
+      margin-bottom: 15px;
+      border-radius: 8px;
     }
     h1 {
       font-size: 1.8rem;
@@ -36,15 +46,20 @@
     }
   </style>
 </head>
+
 <body>
+
+  <!-- Logo -->
+  <img class="logo" src="https://cdn.jsdelivr.net/gh/howitdoit/howitdoit/Icons/howITdoit.PNG" alt="howITdoit Logo">
+
   <h1>Redirecting to howITdoit...</h1>
   <p>If you are not redirected automatically, <a href="https://www.howitdoit.com">click here</a>.</p>
 
   <script>
-    // JavaScript fallback in case meta refresh fails
     setTimeout(() => {
       window.location.href = "https://www.howitdoit.com";
     }, 2000);
   </script>
+
 </body>
 </html>
